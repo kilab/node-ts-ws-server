@@ -1,0 +1,31 @@
+{
+  "name": "node-ts-ws-server",
+  "version": "0.0.0",
+  "description": "Basic WebSocket server written in TypeScript and running on Node.js.",
+  "author": {
+    "name": "Paweł 'kilab' Balicki",
+    "url": "https://kilab.pl"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start": "npm run build && node dist/server.js",
+    "start:live": "npm run build:live",
+    "build": "tsc -p .",
+    "build:live": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts"
+  },
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "websocket": "^1.0.28",
+    "winston": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^6.1.0",
+    "@types/node": "^10.12.18",
+    "@types/websocket": "0.0.40",
+    "@types/winston": "^2.4.4",
+    "nodemon": "^1.18.9",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.12.0",
+    "typescript": "^3.2.2"
+  }
+}
