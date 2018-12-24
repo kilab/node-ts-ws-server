@@ -21,11 +21,11 @@ wsClient.on("connect", (connection) => {
   connection.on("message", (message: IMessage) => {
     if (message.type === "utf8") {
       logger.info(`Received Message: ${message.utf8Data}`);
-      connection.sendUTF(message.utf8Data);
+      // connection.sendUTF(message.utf8Data); // reply message to server
     }
     else if (message.type === "binary") {
       logger.info(`Received Binary Message of ${message.binaryData.length} bytes`);
-      connection.sendBytes(message.binaryData);
+      // connection.sendBytes(message.binaryData); // reply message to server
     }
   });
 
