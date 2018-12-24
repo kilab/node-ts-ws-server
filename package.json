@@ -9,9 +9,9 @@
   "license": "MIT",
   "scripts": {
     "start": "npm run build && node dist/server.js",
-    "start:live": "npm run build:live",
-    "build": "tsc -p .",
-    "build:live": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts"
+    "start:dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/client.ts' --exec 'ts-node' src/server.ts",
+    "start:client:dev": "nodemon --watch 'src/client.ts' --exec 'ts-node' src/client.ts",
+    "build": "tsc -p ."
   },
   "dependencies": {
     "dotenv": "^6.2.0",

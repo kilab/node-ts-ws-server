@@ -1,9 +1,9 @@
 import http, { IncomingMessage, ServerResponse } from "http";
-import { server as WebSocketServer } from "websocket";
+import { server as WebSocketServer, routerRequest, IMessage } from "websocket";
 import { serverStartTime, logger } from "./app";
 
 // Create HTTP server
-const httpServer = http.createServer(function (request: IncomingMessage, response: ServerResponse) {
+const httpServer = http.createServer((request: IncomingMessage, response: ServerResponse) => {
   if (request.url === "/status") {
     response.writeHead(200, { "Content-Type": "application/json" });
 
@@ -32,14 +32,21 @@ const wsServer = new WebSocketServer({
 });
 
 // Handle WebSocket clients emits
-wsServer.on("request", function (request) {
-  const connection = request.accept(undefined, request.origin);
+wsServer.on("request", (request: routerRequest) => {
+  const connection = request.accept(request.origin);
 
-  connection.on("message", function (message) {
-
+  connection.on("message", (message: IMessage) => {
+    if (message.type === "utf8") {
+      logger.info(`Received Message: ${message.utf8Data}`);
+      // connection.sendUTF(message.utf8Data); // reply message to client
+    }
+    else if (message.type === "binary") {
+      logger.info(`Received Binary Message of ${message.binaryData.length} bytes`);
+      // connection.sendBytes(message.binaryData); // reply message to client
+    }
   });
 
-  connection.on("close", function (connection) {
-
+  connection.on("close", (code: number, message: string) => {
+    logger.info(`Client disconnected. Reason: ${message}`);
   });
 });
